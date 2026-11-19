@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Applied AI: Building with Claude</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root {
+  --dark: #23272C;
+  --light: #F5F4F0;
+  --light2: #EAE8E2;
+  --card: #FCFBF8;
+  --line: #D9D5CB;
+  --accent: #8FD3C4;
+  --accent-ink: #1F6F66;
+  --tint: #DCEBE7;
+  --ink: #1E2226;
+  --body: #50565E;
+  --on-dark: #C7CDD3;
+}
+
+body { font-family: 'Inter', Arial, sans-serif; }
+
+section {
+  counter-increment: page;
+  box-sizing: border-box;
+  padding: 128px 128px 160px;
+  background: var(--light);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+}
+section.alt { background: var(--light2); }
+section.dark { background: var(--dark); color: var(--light); }
+
+h1 {
+  font-family: 'Space Grotesk', Arial, sans-serif;
+  font-size: 112px;
+  font-weight: 700;
+  line-height: 1.02;
+  margin: 0;
+  letter-spacing: -2px;
+}
+h2 {
+  font-family: 'Space Grotesk', Arial, sans-serif;
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 1.05;
+  margin: 0 0 48px 0;
+  letter-spacing: -1px;
+  color: var(--ink);
+}
+section.dark h2 { color: var(--light); }
+
+h3 {
+  font-family: 'Space Grotesk', Arial, sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 0 0 12px 0;
+  color: var(--ink);
+}
+
+.eyebrow {
+  font-family: 'Space Grotesk', Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  margin: 0 0 20px 0;
+}
+section.dark .eyebrow { color: var(--accent); }
+
+.lead {
+  font-size: 32px;
+  line-height: 1.4;
+  color: var(--body);
+  margin: 0 0 48px 0;
+  max-width: 1400px;
+}
+section.dark .lead { color: var(--on-dark); }
+
+.cards { display: flex; gap: 32px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; }
+.card {
+  flex: 1;
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: 20px;
+  padding: 36px 40px;
+  box-sizing: border-box;
+  animation: rise 500ms ease-out both;
+  animation-delay: calc(var(--i, 0) * 100ms);
+}
+section.dark .card { background: #2E3339; border-color: #40464E; }
+section.dark .card h3 { color: var(--light); }
+.card .txt { font-size: 28px; line-height: 1.4; color: var(--body); margin: 0; }
+section.dark .card .txt { color: var(--on-dark); }
+.card .link { font-size: 24px; font-weight: 600; color: var(--accent-ink); margin: 16px 0 0 0; }
+section.dark .card .link { color: var(--accent); }
+
+.num {
+  font-family: 'Space Grotesk', Arial, sans-serif;
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent-ink);
+  margin: 0 0 16px 0;
+}
+
+.callout {
+  background: var(--tint);
+  border-left: 8px solid var(--accent-ink);
+  border-radius: 12px;
+  padding: 28px 36px;
+  box-sizing: border-box;
+}
+.callout .txt { font-size: 28px; line-height: 1.45; color: var(--ink); margin: 0; }
+
+.code {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 24px;
+  line-height: 1.55;
+  background: var(--dark);
+  color: #EDEBE5;
+  padding: 36px 40px;
+  border-radius: 16px;
+  margin: 0;
+}
+section.dark .code { background: #171A1E; }
+
+.pill {
+  font-family: 'Space Grotesk', Arial, sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  background: var(--tint);
+  color: var(--accent-ink);
+  padding: 14px 28px;
+  border-radius: 999px;
+  margin: 0;
+  align-self: flex-start;
+}
+
+.foot {
+  position: absolute;
+  left: 128px;
+  bottom: 64px;
+  width: 1200px;
+  font-size: 24px;
+  color: var(--body);
+  margin: 0;
+}
+.pnum {
+  position: absolute;
+  left: 1592px;
+  bottom: 64px;
+  width: 200px;
+  text-align: right;
+  font-size: 24px;
+  color: var(--body);
+  margin: 0;
+}
+.pnum::after { content: counter(page); }
+section.dark .foot, section.dark .pnum { color: var(--on-dark); }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(20px); }
+}
+
+html, body { margin: 0; height: 100%; background: #111316; overflow: hidden; }
+#stage { position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px;
+  transform-origin: center center; }
+#stage > section { position: absolute; inset: 0; width: 1920px; height: 1080px; display: none; }
+#stage > section.on { display: flex; }
+section h1, section h2, section h3, section p { margin-top: 0; }
+section ul { margin-top: 0; }
+section a { color: inherit; }
+section table { border-collapse: collapse; }
+section th { text-align: left; font-weight: 700; border-bottom: 2px solid #1E2226; padding: 14px 20px; }
+section td { border-bottom: 1px solid #D9D5CB; padding: 14px 20px; vertical-align: top; }
+section aside { display: none; }
+.pnum::after { content: none; }
+#notes { position: fixed; left: 0; right: 0; bottom: 0; max-height: 30vh; overflow: auto;
+  background: #23272C; color: #EDEBE5; font: 16px/1.5 Inter, Arial, sans-serif;
+  padding: 16px 24px; display: none; }
+#notes.on { display: block; }
+#hint { position: fixed; right: 12px; bottom: 8px; color: #8A9099;
+  font: 12px Inter, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<div id="stage">
+<section id="cover" class="dark" style="justify-content:space-between">
+<div>
+<p class="eyebrow">Samford University  |  Applied AI</p>
+<h1 style="width:1500px">Building a real app with Claude</h1>
+</div>
+<div>
+<p style="font-size:32px;font-weight:600;margin:0">Butch Mayhew</p>
+<p style="font-size:24px;color:#C7CDD3;margin:8px 0 0 0">Head of QA, Triad  |  aiinqa.com</p>
+</div>
+<aside>Quick intro. Last time I talked about how I use AI. Today we build the app you picked, the news aggregator, live, and I'll show the parts that break too. A few slides, then the build, then Q&amp;A.</aside>
+</section>
+
+<section id="loop">
+<p class="eyebrow">How it works</p>
+<h2>The agent loop</h2>
+<p class="lead">A chatbot answers once. An agent keeps going: it reads, acts, checks what happened, and tries again.</p>
+<div class="cards" style="gap:16px;align-items:stretch">
+<div class="card" style="--i:0"><p class="num">1</p><h3>Read</h3><p class="txt">Your prompt, project files, CLAUDE.md</p></div>
+<svg width="56" height="24" viewBox="0 0 56 24" style="align-self:center;flex:none" aria-hidden="true"><path d="M2 12 H46" stroke="#1F6F66" stroke-width="4" fill="none"/><path d="M42 4 L54 12 L42 20 Z" fill="#1F6F66"/></svg>
+<div class="card" style="--i:1"><p class="num">2</p><h3>Plan</h3><p class="txt">Decide the next step toward the goal</p></div>
+<svg width="56" height="24" viewBox="0 0 56 24" style="align-self:center;flex:none" aria-hidden="true"><path d="M2 12 H46" stroke="#1F6F66" stroke-width="4" fill="none"/><path d="M42 4 L54 12 L42 20 Z" fill="#1F6F66"/></svg>
+<div class="card" style="--i:2"><p class="num">3</p><h3>Act</h3><p class="txt">Edit a file, run a command, call a tool</p></div>
+<svg width="56" height="24" viewBox="0 0 56 24" style="align-self:center;flex:none" aria-hidden="true"><path d="M2 12 H46" stroke="#1F6F66" stroke-width="4" fill="none"/><path d="M42 4 L54 12 L42 20 Z" fill="#1F6F66"/></svg>
+<div class="card" style="--i:3"><p class="num">4</p><h3>Check</h3><p class="txt">Read the output, test results, errors</p></div>
+</div>
+<p class="pill" style="margin-top:40px">Repeat until done, or until it needs you</p>
+<p class="foot">Applied AI with Claude  |  Samford University</p>
+<p class="pnum">2</p>
+<aside>This is the slide everything else hangs on. Most of you have used ChatGPT: you ask, it answers, you copy and paste. Claude Code runs this loop on its own. It reads files, makes a change, runs the tests, sees the failure, and fixes it. Your job shifts from typing code to steering the loop and checking the result.</aside>
+</section>
+
+<section id="context" class="alt">
+<p class="eyebrow">Foundations</p>
+<h2>Context: what Claude can see</h2>
+<p class="lead">Claude only knows what's in front of it. Better context gets you better code, faster.</p>
+<div class="cards">
+<div class="card" style="--i:0"><h3>CLAUDE.md</h3><p class="txt">Project memory loaded every session: the stack, how to run tests, rules like "use TypeScript."</p></div>
+<div class="card" style="--i:1"><h3>The working set</h3><p class="txt">Files it reads, command output, your chat, and any docs or screenshots you hand it.</p></div>
+<div class="card" style="--i:2"><h3>The window fills up</h3><p class="txt">Long sessions get fuzzy. Start fresh per task, use /clear, keep the spec in a file.</p></div>
+</div>
+<p class="foot">Applied AI with Claude  |  Samford University</p>
+<p class="pnum">3</p>
+<aside>Context is the number one lever. If Claude doesn't know you use Next.js, or that tests run with npm test, it guesses. CLAUDE.md is a plain markdown file in the repo root that gets loaded every time. Show the CLAUDE.md for the news aggregator during the build. Also mention the context window is finite: when a session gets long, quality drops, so start a new one per slice.</aside>
+</section>
+
+<section id="models">
+<p class="eyebrow">Foundations</p>
+<h2>Models: pick by the job</h2>
+<table style="font-size:28px;color:#1E2226;width:1664px">
+<tr><th style="width:20%">Model</th><th style="width:44%">Reach for it when</th><th style="width:36%">Tradeoff</th></tr>
+<tr><td>Fable</td><td>The hardest problems, long builds that run on their own</td><td>Most capable, slowest</td></tr>
+<tr><td>Opus</td><td>Planning, tricky bugs, most of today's build</td><td>Strong all-rounder</td></tr>
+<tr><td>Sonnet</td><td>Everyday coding where speed matters</td><td>Faster, a step less depth</td></tr>
+<tr><td>Haiku</td><td>Quick edits, the in-app article summaries</td><td>Fastest and cheapest</td></tr>
+</table>
+<div class="callout" style="margin-top:40px">
+<p class="txt"><b>On a subscription, token price doesn't matter.</b> Use the best model for the job and max out what you're paying for. Hitting your limits is normal and expected, it means you're using it.</p>
+</div>
+<p class="foot">Applied AI with Claude  |  Samford University</p>
+<p class="pnum">4</p>
+<aside>Switch with /model. With a Pro or Max plan you pay a flat price, so don't ration the good models. If you hit the limit, take a break or drop down a model, that's fine. Price does matter in one place today: inside the app, the summaries call the API and you pay per call. That's why Haiku is the pick there.</aside>
+</section>
+
+<section id="plan" class="alt">
+<p class="eyebrow">Building</p>
+<h2>Start with the why</h2>
+<div style="display:flex;gap:48px;align-items:flex-start">
+<div style="flex:1;display:flex;flex-direction:column;gap:20px">
+<div class="card" style="--i:0;flex:none;padding:28px 36px"><h3 style="font-size:32px">Intent first</h3><p class="txt" style="font-size:24px">What problem, for who, and what does good look like?</p></div>
+<div class="card" style="--i:1;flex:none;padding:28px 36px"><h3 style="font-size:32px">Spec just enough</h3><p class="txt" style="font-size:24px">Hours of spec can box the AI in. Give the goal and the must-haves, let it propose the rest.</p></div>
+<div class="card" style="--i:2;flex:none;padding:28px 36px"><h3 style="font-size:32px">You're the judge</h3><p class="txt" style="font-size:24px">Plan mode first. Read its plan, push back, decide.</p></div>
+</div>
+<p class="code" style="width:820px">## Why<br>Students drown in news tabs.<br>Show the stories that matter<br>for one topic, ranked by how<br>many sources cover them.<br><br>## Must have<br>- Pick a topic, see ranked articles<br>- Short AI summary per article<br>- Link back to the source<br><br>## Open to ideas<br>- Layout, sources, ranking</p>
+</div>
+<p class="foot">Applied AI with Claude  |  Samford University</p>
+<p class="pnum">5</p>
+<aside>This answers "how do you get specs clearly defined before handing them to an agent." I used to over-spec. A model can often come up with a better approach than the one I'd have written down in three hours. So I lead with the why and the must-haves, leave room for ideas, and judge what comes back. Shift+Tab into plan mode.</aside>
+</section>
+
+<section id="grill">
+<p class="eyebrow">Building</p>
+<h2>Ask the AI to grill you</h2>
+<div style="display:flex;gap:48px;align-items:flex-start">
+<p class="code" style="width:1000px;font-size:26px">/grill-me<br><br>Here's what I want to build and why:<br>[paste the intent]<br><br>Interview me until we agree on the plan.<br>Ask one round of numbered questions at<br>a time, each with your recommended answer.<br>Look up facts in the code yourself, leave<br>the decisions to me. Build nothing until<br>I confirm.</p>
+<div style="flex:1;display:flex;flex-direction:column;gap:24px">
+<p class="lead" style="margin:0;font-size:28px">Its questions are the gaps you'd otherwise find later as bugs.</p>
+<div class="callout"><p class="txt" style="font-size:24px">grill-me by Matt Pocock<br><a href="https://github.com/mattpocock/skills">github.com/mattpocock/skills</a></p></div>
+</div>
+</div>
+<p class="foot">Applied AI with Claude  |  Samford University</p>
+<p class="pnum">6</p>
+<aside>Install: claude plugin install mattpocock-skills@claude-plugins-official. The skill interviews you round by round, each question numbered with a recommended answer, and it doesn't act until you confirm you're aligned. The prompt on screen is my plain-English version, so anyone can paste it without the skill. Run it live on the news aggregator intent.</aside>
+</section>
+
+<section id="demo" class="dark" style="justify-content:center">
+<p class="eyebrow">Live</p>
+<h1>Demo: let's build it</h1>
+<p class="lead" style="margin:40px 0 0 0">The news aggregator, one shot, in front of you. Roadblocks included.</p>
+<aside>Switch to the terminal. Intent, grill-me, plan mode, then one-shot the build. Narrate what Claude is doing as it loops. Come back to the slides after it deploys.</aside>
+</section>
+
+<section id="tools" class="alt">
+<p class="eyebrow">Recap</p>
+<h2>What we just used</h2>
+<div class="grid3">
+<div class="card" style="--i:0"><h3>Claude Code</h3><p class="txt">The agent in the terminal, running the loop</p></div>
+<div class="card" style="--i:1"><h3>The model</h3><p class="txt">[Opus or Fable] for the build</p></div>
+<div class="card" style="--i:2"><h3>Skills</h3><p class="txt">grill-me, superpowers, impeccable</p></div>
+<div class="card" style="--i:3"><h3>MCP</h3><p class="txt">[Playwright MCP to check the UI]</p></div>
+<div class="card" style="--i:4"><h3>Git + GitHub</h3><p class="txt">Every change tracked and pushed</p></div>
+<div class="card" style="--i:5"><h3>Hosting</h3><p class="txt">[Vercel, Netlify, or Cloudflare]</p></div>
+</div>
+<p class="foot">Applied AI with Claude  |  Samford University</p>
+<p class="pnum">8</p>
+<aside>Fill in the bracketed items with what actually got used in the demo. MCP in one sentence: it's the plug that gives the agent new tools, like a browser, GitHub, or a database.</aside>
+</section>
+
+<section id="skills">
+<p class="eyebrow">Recap</p>
+<h2>Skills worth installing</h2>
+<p class="lead" style="margin-bottom:36px">A skill is a saved playbook. Claude loads it when the task matches.</p>
+<div class="grid2">
+<div class="card" style="--i:0"><h3>superpowers</h3><p class="txt">A full workflow: brainstorm, plan, test first, review</p><p class="link"><a href="https://github.com/obra/superpowers">github.com/obra/superpowers</a></p></div>
+<div class="card" style="--i:1"><h3>impeccable</h3><p class="txt">Design vocabulary and checks against generic AI-looking UI</p><p class="link"><a href="https://impeccable.style">impeccable.style</a></p></div>
+<div class="card" style="--i:2"><h3>grill-me</h3><p class="txt">Interviews you until the plan holds up</p><p class="link"><a href="https://github.com/mattpocock/skills">github.com/mattpocock/skills</a></p></div>
+<div class="card" style="--i:3"><h3>Anthropic's skills</h3><p class="txt">frontend-design, skill-creator, webapp-testing</p><p class="link"><a href="https://github.com/anthropics/skills">github.com/anthropics/skills</a></p></div>
+</div>
+<p class="foot">Applied AI with Claude  |  Samford University</p>
+<p class="pnum">9</p>
+<aside>Superpowers install: /plugin install superpowers@claude-plugins-official. Impeccable: /plugin marketplace add pbakaus/impeccable, then install from /plugin. skill-creator helps you write your own. CLAUDE.md is always loaded, a skill only loads when it's relevant, which keeps the context clean.</aside>
+</section>
+
+<section id="responsibly" class="alt">
+<p class="eyebrow">Shipping responsibly</p>
+<h2>Context sets the quality bar</h2>
+<div style="height:16px;border-radius:8px;background:linear-gradient(90deg, #DCEBE7, #1F6F66);margin:0 0 12px 0"></div>
+<div style="display:flex;justify-content:space-between;margin:0 0 32px 0"><p style="font-size:24px;font-weight:600;color:#50565E;margin:0">Lower stakes</p><p style="font-size:24px;font-weight:600;color:#1F6F66;margin:0">Higher stakes</p></div>
+<div class="cards">
+<div class="card" style="--i:0"><h3>Personal app</h3><p class="txt">It works for you. Low ceremony is fine, ship and learn.</p></div>
+<div class="card" style="--i:1"><h3>Team or class tool</h3><p class="txt">Others depend on it. Tests on the core paths, someone reviews.</p></div>
+<div class="card" style="--i:2"><h3>Business or B2B</h3><p class="txt">Customers and data at risk. Security review, real test coverage, monitoring, access control.</p></div>
+</div>
+<p class="foot">Applied AI with Claude  |  Samford University</p>
+<p class="pnum">10</p>
+<aside>Same tools, different bar. The news aggregator we built is on the left side of this scale. If a company sold it, you'd need to think about secrets, auth, rate limits, legal use of the feeds, and a lot more testing. AI makes it fast to build, so the judgment about how much quality you need is on you. Keys go in .env and stay out of git and off the screen at every level.</aside>
+</section>
+
+<section id="verify">
+<p class="eyebrow">Shipping responsibly</p>
+<h2>Verify everything</h2>
+<p class="lead">AI writes code fast. You still own whether it works.</p>
+<div class="cards">
+<div class="card" style="--i:0"><h3 >Tests</h3><p class="txt">Ask for tests as part of the build. Run them. A green check you didn't run means nothing.</p></div>
+<div class="card" style="--i:1"><h3 >Run it</h3><p class="txt">Click through like a user. Empty topic, slow feed, a 500-word headline.</p></div>
+<div class="card" style="--i:2"><h3 >Read the diff</h3><p class="txt">Every change, before you commit. Watch for deleted tests and hardcoded data.</p></div>
+</div>
+<p class="foot">Applied AI with Claude  |  Samford University</p>
+<p class="pnum">11</p>
+<aside>This is the QA part, and the part I care most about. Show a failure live on purpose: a feed that returns nothing, or a summary that's wrong. Agents sometimes "fix" a failing test by changing the test. Reading the diff is how you catch that.</aside>
+</section>
+
+<section id="git">
+<p class="eyebrow">Shipping responsibly</p>
+<h2>Git tracks every change</h2>
+<p class="lead">The agent edits a lot of files fast. Git is how you see what it did and get back to a good state.</p>
+<div class="cards">
+<div class="card" style="--i:0"><h3 >See it</h3><p class="txt">git diff shows exactly what changed, before you commit</p></div>
+<div class="card" style="--i:1"><h3 >Save it</h3><p class="txt">Commit each working step, so you have a checkpoint</p></div>
+<div class="card" style="--i:2"><h3 >Undo it</h3><p class="txt">Bad generation? Revert to the last good commit and re-prompt</p></div>
+</div>
+<p class="foot">Applied AI with Claude  |  Samford University</p>
+<p class="pnum">12</p>
+<aside>Point back at the demo: show git log for the repo we just built. The history tells the story of the build. Ask Claude to write the commit messages, then read them, it's a quick check that it understood what it changed.</aside>
+</section>
+
+<section id="aifeatures">
+<p class="eyebrow">Shipping responsibly</p>
+<h2>When your app calls AI too</h2>
+<p class="lead">The article summaries call a model on every request. That changes how you build and test.</p>
+<table style="font-size:28px;color:#1E2226;width:1664px">
+<tr><th style="width:50%">What you get</th><th style="width:50%">What it costs you</th></tr>
+<tr><td>Summaries nobody would write by hand</td><td>Money per call, so cache results</td></tr>
+<tr><td>Works on any topic the user picks</td><td>Latency: show something while it loads</td></tr>
+<tr><td>A feature built in an afternoon</td><td>Wrong or made-up summaries, so link the source</td></tr>
+<tr><td>Trends across many articles</td><td>Rate limits and a key you must keep server-side</td></tr>
+</table>
+<p class="foot">Applied AI with Claude  |  Samford University</p>
+<p class="pnum">13</p>
+<aside>Takeaway 3, pros and cons of AI features. The hard part for testing: the output changes every run, so you can't assert exact text. Check shape instead: summary exists, under a length limit, mentions the article's topic. And always link to the original so a bad summary isn't the last word.</aside>
+</section>
+
+<section id="ship" class="alt">
+<p class="eyebrow">Shipping responsibly</p>
+<h2>Ship it</h2>
+<p class="lead">Connect the repo to a host once. After that, every push deploys.</p>
+<div class="cards" style="gap:16px;align-items:stretch">
+<div class="card" style="--i:0"><h3>git push</h3><p class="txt">Code goes to GitHub</p></div>
+<svg width="56" height="24" viewBox="0 0 56 24" style="align-self:center;flex:none" aria-hidden="true"><path d="M2 12 H46" stroke="#1F6F66" stroke-width="4" fill="none"/><path d="M42 4 L54 12 L42 20 Z" fill="#1F6F66"/></svg>
+<div class="card" style="--i:1"><h3>Auto deploy</h3><p class="txt">Vercel, Netlify, or Cloudflare builds it</p></div>
+<svg width="56" height="24" viewBox="0 0 56 24" style="align-self:center;flex:none" aria-hidden="true"><path d="M2 12 H46" stroke="#1F6F66" stroke-width="4" fill="none"/><path d="M42 4 L54 12 L42 20 Z" fill="#1F6F66"/></svg>
+<div class="card" style="--i:2"><h3>Public URL</h3><p class="txt">[your-app-url]</p></div>
+</div>
+<p class="foot">Applied AI with Claude  |  Samford University</p>
+<p class="pnum">14</p>
+<aside>Takeaway 4, how you make it available to everyone. Put the live URL up so the class can open it on their phones.</aside>
+</section>
+
+<section id="links" class="dark">
+<p class="eyebrow">Take it with you</p>
+<h2>Links and Q&amp;A</h2>
+<div class="grid2">
+<div class="card" style="--i:0"><h3>Today's repo</h3><p class="link"><a href="https://github.com/">[repo-url]</a></p></div>
+<div class="card" style="--i:1"><h3>superpowers</h3><p class="link"><a href="https://github.com/obra/superpowers">github.com/obra/superpowers</a></p></div>
+<div class="card" style="--i:2"><h3>impeccable</h3><p class="link"><a href="https://impeccable.style">impeccable.style</a></p></div>
+<div class="card" style="--i:3"><h3>grill-me</h3><p class="link"><a href="https://github.com/mattpocock/skills">github.com/mattpocock/skills</a></p></div>
+</div>
+<p style="font-size:28px;font-weight:600;margin:40px 0 0 0">Butch Mayhew  |  aiinqa.com  |  linkedin.com/in/butchmayhew</p>
+<p class="foot">Applied AI with Claude  |  Samford University</p>
+<p class="pnum">15</p>
+<aside>Leave this up during Q&amp;A so people can grab the links. Swap in the repo URL after the demo.</aside>
+</section>
+
+</div>
+<div id="notes"></div>
+<div id="hint">Arrows or click to move, N for notes, F for fullscreen</div>
+<script>
+const slides = [...document.querySelectorAll('#stage > section')];
+const stage = document.getElementById('stage');
+const notes = document.getElementById('notes');
+let i = Math.max(0, Math.min(slides.length - 1, (parseInt(location.hash.slice(1)) || 1) - 1));
+
+function fit() {
+  const s = Math.min(innerWidth / 1920, innerHeight / 1080);
+  stage.style.transform = `translate(-50%, -50%) scale(${s})`;
+}
+function show(n) {
+  i = Math.max(0, Math.min(slides.length - 1, n));
+  slides.forEach((el, k) => el.classList.toggle('on', k === i));
+  const aside = slides[i].querySelector('aside');
+  notes.textContent = aside ? aside.textContent : '';
+  history.replaceState(null, '', '#' + (i + 1));
+}
+addEventListener('resize', fit);
+addEventListener('keydown', e => {
+  if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) show(i + 1);
+  else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) show(i - 1);
+  else if (e.key === 'Home') show(0);
+  else if (e.key === 'End') show(slides.length - 1);
+  else if (e.key === 'n' || e.key === 'N') notes.classList.toggle('on');
+  else if (e.key === 'f' || e.key === 'F') document.documentElement.requestFullscreen?.();
+});
+stage.addEventListener('click', e => {
+  if (e.target.closest('a')) return;
+  show(e.clientX > innerWidth / 2 ? i + 1 : i - 1);
+});
+fit();
+show(i);
+</script>
+</body>
+</html>

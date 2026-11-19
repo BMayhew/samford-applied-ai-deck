@@ -1,0 +1,15 @@
+<section id="aifeatures">
+<p class="eyebrow">Shipping responsibly</p>
+<h2>When your app calls AI too</h2>
+<p class="lead">The article summaries call a model on every request. That changes how you build and test.</p>
+<table style="font-size:28px;color:#1E2226;width:1664px">
+<tr><th style="width:50%">What you get</th><th style="width:50%">What it costs you</th></tr>
+<tr><td>Summaries nobody would write by hand</td><td>Money per call, so cache results</td></tr>
+<tr><td>Works on any topic the user picks</td><td>Latency: show something while it loads</td></tr>
+<tr><td>A feature built in an afternoon</td><td>Wrong or made-up summaries, so link the source</td></tr>
+<tr><td>Trends across many articles</td><td>Rate limits and a key you must keep server-side</td></tr>
+</table>
+<p class="foot">Applied AI with Claude  |  Samford University</p>
+<p class="pnum"></p>
+<aside>Takeaway 3, pros and cons of AI features. The hard part for testing: the output changes every run, so you can't assert exact text. Check shape instead: summary exists, under a length limit, mentions the article's topic. And always link to the original so a bad summary isn't the last word.</aside>
+</section>
