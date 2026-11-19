@@ -10,6 +10,12 @@ View it online at https://bmayhew.github.io/samford-applied-ai-deck/ or open `in
 - `N` shows the speaker notes
 - `F` goes fullscreen
 
+## What's in this repo
+
+- `index.html`: the slide viewer
+- `deck/`: the slide source
+- [`code/`](code/): where we build the app during class, and where the skills get installed
+
 ## What's covered
 
 1. The agent loop
@@ -20,16 +26,27 @@ View it online at https://bmayhew.github.io/samford-applied-ai-deck/ or open `in
 6. Live demo
 7. What we used, and skills worth installing
 8. Shipping responsibly: the quality bar, verifying, git, AI features in your app, deploying
+9. Be more ambitious
 
-## Links from the talk
+## Skills from the talk
 
-- superpowers: https://github.com/obra/superpowers
-- impeccable: https://impeccable.style
-- grill-me: https://github.com/mattpocock/skills
-- Anthropic's skills: https://github.com/anthropics/skills
-- My newsletter, AI in QA: https://aiinqa.com
+| Skill | What it does | Link |
+|---|---|---|
+| grill-me | Interviews you until the plan holds up | https://github.com/mattpocock/skills |
+| superpowers | A full workflow: brainstorm, plan, test first, review | https://github.com/obra/superpowers |
+| impeccable | Design vocabulary and checks against generic AI-looking UI | https://impeccable.style |
+| be-ambitious | Turns a task into a bigger plan and a more demanding prompt | https://github.com/robonuggets/be-ambitious |
+| Anthropic's skills | frontend-design, skill-creator, webapp-testing, and more | https://github.com/anthropics/skills |
 
-## Editing
+## Recommended reading
+
+[How to be more ambitious: A tutorial for humans with models](https://felixrieseberg.com/how-to-be-more-ambitious-a-tutorial-for-humans-with-models/) by Felix Rieseberg.
+
+> "I frequently proclaim (together with other people working on AI) that we ought to be more ambitious when using it."
+
+The be-ambitious skill above is built from this article.
+
+## Editing the slides
 
 The slide source is in `deck/`: one HTML file per slide in `deck/slides/`, shared styles in `deck/deck.css`, and the slide order in `deck/deck.json`. After you edit, rebuild the viewer:
 
@@ -37,4 +54,4 @@ The slide source is in `deck/`: one HTML file per slide in `deck/slides/`, share
 python3 build.py
 ```
 
-Butch Mayhew, [LinkedIn](https://www.linkedin.com/in/butchmayhew)
+Butch Mayhew, [aiinqa.com](https://aiinqa.com), [LinkedIn](https://www.linkedin.com/in/butchmayhew)
