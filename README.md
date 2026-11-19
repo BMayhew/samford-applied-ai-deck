@@ -4,7 +4,7 @@ Slides from my guest session in the Applied AI class at Samford University on No
 
 ## View the deck
 
-Open `index.html` in a browser, or use the GitHub Pages link if it's turned on for this repo.
+View it online at https://bmayhew.github.io/samford-applied-ai-deck/ or open `index.html` locally.
 
 - Arrow keys, space, or click to move between slides
 - `N` shows the speaker notes
